@@ -8,7 +8,7 @@ function Header() {
   const [, setIsOpen] = useState<boolean>(false);
   const toggleNavBar = (): void => setIsOpen((prev) => !prev);
   return (
-    <div className="bg-emerald-950 h-15 w-full flex justify-between md:px-10 px-2 items-center">
+    <div className="bg-[#0C3B2E] h-18 w-full flex justify-between md:px-10 px-2 items-center">
       <div className="flex justify-between items-center">
         <Image
           className="rounded-xl"
@@ -27,7 +27,7 @@ function Header() {
       <div className="lg:hidden cursor-pointer" onClick={toggleNavBar}>
         <GiHamburgerMenu className="text-2xl text-white" />
       </div>
-      <div className="text-white flex justify-between items-center md:gap-5 hidden lg:block">
+      <div className="text-white lg:flex justify-between items-center md:gap-5 hidden">
         <Link
           className="rounded-xl hover:bg-emerald-800 p-2 px-3 hover:text-amber-500"
           href="/"
@@ -57,9 +57,12 @@ function Header() {
         <button className="rounded-xl p-2 px-3 border border-gray-200 text-white hover:bg-emerald-800 hover:text-amber-500 font-semibold">
           + List Your PG
         </button>
-        <button className=" bg-amber-500 rounded-xl p-2 px-5 text-black font-semibold ml-3 hover:bg-amber-600">
+        <Link
+          href="/signin/renter"
+          className="bg-amber-500 rounded-xl p-2 px-5 text-black font-semibold ml-3 hover:bg-amber-600"
+        >
           Sign in
-        </button>
+        </Link>
       </div>
     </div>
   );
