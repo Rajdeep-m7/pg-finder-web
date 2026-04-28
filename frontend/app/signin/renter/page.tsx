@@ -79,7 +79,7 @@ const Page = () => {
               </button>
             </p>
 
-            <Link href="/" className="block mt-2 text-[#6D9773] hover:underline">
+            <Link href="/signin/owner" className="block mt-2 text-[#6D9773] hover:underline">
               Sign in as PG Owner instead →
             </Link>
           </div>
@@ -150,7 +150,7 @@ const Page = () => {
               </button>
             </p>
 
-            <Link href="/" className="block mt-2 text-[#6D9773] hover:underline">
+            <Link href="/signin/owner" className="block mt-2 text-[#6D9773] hover:underline">
               Sign in as PG Owner instead →
             </Link>
           </div>

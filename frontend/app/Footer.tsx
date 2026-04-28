@@ -21,7 +21,7 @@ const Footer = () => {
             />
             <p className="text-2xl font-bold">StayNest</p>
           </div>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-400 mt-3">
             Find your perfect paying guest accommodation with ease. Trusted by
             thousands of tenants and PG owners across India.
           </p>
