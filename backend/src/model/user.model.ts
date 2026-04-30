@@ -11,11 +11,11 @@ export interface User {
 }
 
 // Function to create a new user in the database
-const createUser = async (user : User)=>{
+export const createUser = async (user : User)=>{
     const {name , email , phone , password , role } = user;
 
     const query = `
-    INSERT VALUE INTO user (name , email , phone , password , role)
+    INSERT INTO users (name , email , phone , password , role)
     VALUES($1 ,$2 , $3 , $4 , $5)
     RETURNING *;`
 
@@ -25,8 +25,8 @@ const createUser = async (user : User)=>{
     return result.rows[0];
 }
 
-// funcction to get a user by email for login
-const getUserByEmail = async(email : string)=>{
+// function to get a user by email for login
+export const getUserByEmail = async(email : string)=>{
     const result = await pool.query(`
     SELECT * FROM users WHERE email = $1`,
     [email]
@@ -36,7 +36,7 @@ const getUserByEmail = async(email : string)=>{
 }
 
 // get user by ID
-const getUserById = async(id: number)=>{
+export const getUserById = async(id: number)=>{
     const result = await pool.query(`
         SELECT * FROM users WHERE id=$1`, [id]
     );
@@ -45,7 +45,7 @@ const getUserById = async(id: number)=>{
 }
 
 // get all users
-const getAllUsers = async()=>{
+export const getAllUsers = async()=>{
     const result = await pool.query(`
         SELECT * FROM users
         `)

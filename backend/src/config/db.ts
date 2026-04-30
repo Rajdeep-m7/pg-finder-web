@@ -11,6 +11,12 @@ export const pool = new Pool({
     database : process.env.DB_NAME,
 })
 
-pool.on("connect", ()=>{
-    console.log("Connected to the database");
-})
+export const connectDB = async () => {
+  try {
+    await pool.query("SELECT 1"); // test query
+    console.log("Database connected");
+  } catch (error) {
+    console.error("Database connection failed");
+    process.exit(1);
+  }
+};
