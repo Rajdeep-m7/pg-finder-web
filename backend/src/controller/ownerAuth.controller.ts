@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import type { User } from "../model/user.model.js";
 import { createUser, getUserByEmail } from "../model/user.model.js";
 
-export const userSignUp = async ( req : express.Request , res : express.Response)=>{
+export const ownerSignUp = async ( req : express.Request , res : express.Response)=>{
 
     const {email , password , name , phone}= req.body;
 
@@ -14,7 +14,7 @@ export const userSignUp = async ( req : express.Request , res : express.Response
             return res.status(400).json({message: "User already exists"});
         }
         const hashedPassword = await bcrypt.hash(password , 10);
-        const role : "admin" | "owner" | "user" = "user";
+        const role : "admin" | "owner" | "user" = "owner";
         const newUser = await createUser({name , email , phone , password : hashedPassword , role} as User);
 
         const token = jwt.sign({ id: newUser.id , 
@@ -37,7 +37,7 @@ export const userSignUp = async ( req : express.Request , res : express.Response
     }
 }
 
-export const userSignIn = async ( req: express.Request , res: express.Response)=>{
+export const ownerSignIn = async ( req: express.Request , res: express.Response)=>{
     const { email ,password}= req.body;
 
     try {
@@ -46,15 +46,16 @@ export const userSignIn = async ( req: express.Request , res: express.Response)=
             return res.status(400).json({message: "Invalid email or password"});
         }
 
-        if(user.role !== "user"){ 
-            return res.status(403).json({message: "Access denied, user only"});
+        if(user.role !== "owner"){
+            return res.status(403).json({message: "Access denied, owner only"});
         }
 
         const isPasswordValid = await bcrypt.compare(password , user.password);
+
         if(!isPasswordValid){
             return res.status(400).json({message: "Invalid email or password"});
         }
-        
+
         const token = jwt.sign({ id: user.id , 
             email : user.email ,
             name : user.name ,
@@ -74,7 +75,7 @@ export const userSignIn = async ( req: express.Request , res: express.Response)=
     }
 }
 
-export const userSignOut = async (req: express.Request , res: express.Response)=>{
+export const ownerSignOut = async (req: express.Request , res: express.Response)=>{
     try {
         await res.clearCookie("jwt", {
             httpOnly: true,

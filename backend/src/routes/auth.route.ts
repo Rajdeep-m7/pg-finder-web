@@ -1,12 +1,14 @@
 import express from "express"
-import { userSignIn, userSignUp } from "../controller/userAuth.controller.js";
+import { userSignIn, userSignOut, userSignUp } from "../controller/userAuth.controller.js";
+import { ownerSignIn, ownerSignOut, ownerSignUp } from "../controller/ownerAuth.controller.js";
 
 const authRouter = express.Router();
 
 authRouter.post("/user/signin",userSignIn);
 authRouter.post("/user/signup", userSignUp);
-authRouter.get("/user/signout", (req, res)=>{
-    res.status(200).json({message: "Sign out successful"});
-});
+authRouter.post("/user/logout", userSignOut);
+authRouter.post("/owner/signup", ownerSignUp); 
+authRouter.post("/owner/signin", ownerSignIn); 
+authRouter.post("/owner/logout", ownerSignOut);
 
 export default authRouter;
