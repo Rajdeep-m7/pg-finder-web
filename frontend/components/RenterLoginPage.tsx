@@ -6,7 +6,7 @@ import React, { useState } from "react";
 
 const RenterLoginPage = () => {
   const [signInMode, setSignInMode] = useState<"signin" | "signup">("signin");
-  const { userSignIn, userSignUp } = useAuth();
+  const {isUserSignIn , isUserSignUp , userSignIn, userSignUp } = useAuth();
   const router = useRouter();
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -72,11 +72,11 @@ const RenterLoginPage = () => {
                 />
               </div>
 
-              <button
+              <button disabled={isUserSignIn}
                 type="submit"
                 className="w-full bg-[#6D9773] text-white py-2 rounded-md hover:bg-[#5a7d5f] transition font-bold"
               >
-                Sign In
+                { isUserSignIn ? "signIn In..." : "Sign In"}
               </button>
             </form>
 
@@ -151,11 +151,11 @@ const RenterLoginPage = () => {
                 />
               </div>
 
-              <button
+              <button disabled={isUserSignUp}
                 type="submit"
                 className="w-full bg-[#6D9773] text-white py-2 rounded-md hover:bg-[#5a7d5f] transition font-bold"
               >
-                Sign Up
+                {isUserSignUp ? "SignIn up..." : "Sign Up"}
               </button>
             </form>
 

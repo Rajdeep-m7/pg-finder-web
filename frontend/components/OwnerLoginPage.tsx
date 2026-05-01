@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 
 const OwnerLoginPage = () => {
     const [signInMode, setSignInMode] = useState<"signin" | "signup">("signin");
-    const { ownerSignIn , ownerSignUp }= useAuth();
+    const {isOwnerSignIn , isOwnerSignUp, ownerSignIn , ownerSignUp }= useAuth();
     const router = useRouter();
 
     const handleSignIn = async (e : React.FormEvent<HTMLFormElement>) => {
@@ -71,11 +71,11 @@ const OwnerLoginPage = () => {
                 />
               </div>
 
-              <button
+              <button disabled={isOwnerSignIn}
                 type="submit"
                 className="w-full bg-[#FFBA00] text-white py-2 rounded-md hover:bg-[#BB8A52] transition font-bold"
               >
-                Sign In
+                {isOwnerSignIn ? "Signing in..." : "Sign In"}
               </button>
             </form>
 
@@ -150,18 +150,18 @@ const OwnerLoginPage = () => {
                 />
               </div>
 
-              <button
+              <button disabled={isOwnerSignUp}
                 type="submit"
                 className="w-full bg-[#FFBA00] text-white py-2 rounded-md hover:bg-[#BB8A52] transition font-bold"
               >
-                Sign Up
+                {isOwnerSignUp ? "Signing up..." : "Sign Up"}
               </button>
             </form>
 
             <div className="text-center mt-4 text-sm text-gray-600">
               <p>
                 Already have an account?{" "}
-                <button
+                <button 
                   onClick={() => setSignInMode("signin")}
                   className=" hover:underline text-[#FFBA00]"
                 >

@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Toaster } from "sonner";
+import AuthProvider from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
+        <AuthProvider>
         <Header />
         {children}
         <Toaster
@@ -27,6 +29,7 @@ export default function RootLayout({
           closeButton
         />
         <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

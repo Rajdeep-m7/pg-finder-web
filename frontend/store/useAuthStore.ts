@@ -30,11 +30,12 @@ type AuthState = {
   isOwnerSignUp: boolean;
   isCheckingAuth: boolean;
 
-  checkUserAuth: () => Promise<void>;
+  checkAuth: () => Promise<boolean>;
   userSignUp: (data: SignUpData) => Promise<boolean>;
   userSignIn: (data: SignInData) => Promise<boolean>;
   ownerSignUp: (data: SignUpData) => Promise<boolean>;
   ownerSignIn: (data: SignInData) => Promise<boolean>;
+  logout:()=>Promise<void>;
 };
 
 export const useAuth = create<AuthState>((set) => ({
@@ -46,27 +47,30 @@ export const useAuth = create<AuthState>((set) => ({
   isUserSignUp: false,
   isCheckingAuth: true,
 
-  checkUserAuth: async () => {
-    try {
-      const res = await axiosInstance.get("/auth/user/check");
-      if (res.data.role != "user") {
-        set({
-          authUser: null,
-          isCheckingAuth: false,
-        });
-        return;
-      }
-      set({
-        authUser: res.data,
-        isCheckingAuth: false,
-      });
-    } catch (error: unknown) {
-      const message =
+  checkAuth: async () => {
+  try {
+    const res = await axiosInstance.get("/auth/check");
+
+    set({
+      authUser: res.data.role === "user" ? res.data : null,
+      authOwner: res.data.role === "owner" ? res.data : null,
+      isCheckingAuth: false,
+    });
+
+    return true;
+  } catch (error) {
+    const message =
         error instanceof Error ? error.message : "Something went wrong";
       toast.error(message);
-      set({ isCheckingAuth: false });
-    }
-  },
+    set({
+      authUser: null,
+      authOwner: null,
+      isCheckingAuth: false,
+    });
+
+    return false;
+  }
+},
 
   userSignUp: async (data) => {
     try {
@@ -110,38 +114,17 @@ export const useAuth = create<AuthState>((set) => ({
     }
   },
 
-  userLogout: async () => {
+  logout: async () => {
     try {
-      await axiosInstance.post("/auth/user/logout");
+      await axiosInstance.post("/auth/logout");
       set({
         authUser: null,
+        authOwner: null,
       });
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Something went wrong";
       toast.error(message);
-    }
-  },
-
-  checkOwnerAuth: async () => {
-    try {
-      const res = await axiosInstance.get("/auth/owner/check");
-      if (res.data.role != "admin") {
-        set({
-          authOwner: null,
-          isCheckingAuth: false,
-        });
-        return;
-      }
-      set({
-        authOwner: res.data,
-        isCheckingAuth: false,
-      });
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Something went wrong";
-      toast.error(message);
-      set({ isCheckingAuth: false });
     }
   },
 
@@ -183,13 +166,5 @@ export const useAuth = create<AuthState>((set) => ({
     }
   },
 
-  ownerLogout: async () => {
-    try {
-      await axiosInstance.post("/auth/owner/logout");
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Something went wrong";
-      toast.error(message);
-    }
-  },
+  
 }));
