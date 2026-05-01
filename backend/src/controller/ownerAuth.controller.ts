@@ -23,7 +23,7 @@ export const ownerSignUp = async ( req : express.Request , res : express.Respons
             role: newUser.role
         }, process.env.SECRET as string , {expiresIn : "7d"});
 
-        res.cookie("jwt", token, {
+        res.cookie("stayNest", token, {
             httpOnly: true,          
             secure: process.env.NODE_ENV === "production",  
             sameSite: "strict",     
@@ -62,7 +62,7 @@ export const ownerSignIn = async ( req: express.Request , res: express.Response)
             role: user.role
         }, process.env.SECRET as string , {expiresIn : "7d"});
 
-        res.cookie("jwt", token, {
+        res.cookie("stayNest", token, {
             httpOnly: true,          
             secure: process.env.NODE_ENV === "production",  
             sameSite: "strict",     
@@ -77,7 +77,7 @@ export const ownerSignIn = async ( req: express.Request , res: express.Response)
 
 export const ownerSignOut = async (req: express.Request , res: express.Response)=>{
     try {
-        await res.clearCookie("jwt", {
+        await res.clearCookie("stayNest", {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",  
         });
@@ -85,4 +85,12 @@ export const ownerSignOut = async (req: express.Request , res: express.Response)
     } catch (error) {
         res.status(500).json({message: "Sign out failed"});
     }
+}
+
+export const checkOwner=(req : express.Request, res:express.Response)=>{
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    return res.status(500).json({ message: "unKnown Owner" });
+  }
 }
