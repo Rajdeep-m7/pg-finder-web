@@ -12,7 +12,7 @@ declare global {
 
 export const protect = async (req: express.Request, res: express.Response, next: NextFunction) => {
     try {
-        const token = req.cookies.jwt;
+        const token = req.cookies.stayNest;
         const decoded = jwt.verify(token, process.env.SECRET as string);
         req.user = decoded;
         next();

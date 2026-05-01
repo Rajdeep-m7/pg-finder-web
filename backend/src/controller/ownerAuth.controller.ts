@@ -26,7 +26,7 @@ export const ownerSignUp = async ( req : express.Request , res : express.Respons
         res.cookie("stayNest", token, {
             httpOnly: true,          
             secure: process.env.NODE_ENV === "production",  
-            sameSite: "strict",     
+            sameSite: "lax",     
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });
 
@@ -65,7 +65,7 @@ export const ownerSignIn = async ( req: express.Request , res: express.Response)
         res.cookie("stayNest", token, {
             httpOnly: true,          
             secure: process.env.NODE_ENV === "production",  
-            sameSite: "strict",     
+            sameSite: "lax",     
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });
 
@@ -75,19 +75,8 @@ export const ownerSignIn = async ( req: express.Request , res: express.Response)
     }
 }
 
-export const ownerSignOut = async (req: express.Request , res: express.Response)=>{
-    try {
-        await res.clearCookie("stayNest", {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",  
-        });
-        res.status(200).json({message: "Sign out successful"});
-    } catch (error) {
-        res.status(500).json({message: "Sign out failed"});
-    }
-}
 
-export const checkOwner=(req : express.Request, res:express.Response)=>{
+export const checkOwner = (req : express.Request, res:express.Response)=>{
   try {
     res.status(200).json(req.user);
   } catch (error) {
