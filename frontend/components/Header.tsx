@@ -17,11 +17,12 @@ function Header() {
     logout,
   } = useAuth();
   const isAuthenticated = Boolean(authUser || authOwner);
-  const isAdmin = Boolean(authOwner?.role === "admin");
+  const isAdmin = Boolean(authOwner?.role === "owner");
 
   useEffect(() => {
     checkAuth();
-  }, [checkAuth]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -80,9 +81,9 @@ function Header() {
           </div>
           <div className="hidden lg:block ">
             {isAdmin && (
-              <button className="rounded-xl p-2 px-3 border border-gray-200 text-white hover:bg-emerald-800 hover:text-amber-500 font-semibold">
+              <Link href="/owner" className="rounded-xl p-2 px-3 border border-gray-200 text-white hover:bg-emerald-800 hover:text-amber-500 font-semibold">
                 + List Your PG
-              </button>
+              </Link>
             )}
             {isAuthenticated ? (
               <button
@@ -145,12 +146,12 @@ function Header() {
               </div>
               <div className="flex gap-5 flex-col items-center mt-2 justify-center">
                 {isAdmin && (
-                  <button
+                  <Link href="/owner"
                     onClick={toggleNavBar}
                     className="rounded-xl p-2 px-3 border border-gray-200 text-white hover:bg-emerald-800 hover:text-amber-500 font-semibold"
                   >
                     + List Your PG
-                  </button>
+                  </Link>
                 )}
                 {isAuthenticated ? (
                   <button

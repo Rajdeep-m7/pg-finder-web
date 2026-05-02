@@ -40,6 +40,7 @@ export const userSignUp = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
+      path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -81,6 +82,7 @@ export const userSignIn = async (
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
+      path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -95,6 +97,7 @@ export const SignOut = async (req: express.Request, res: express.Response) => {
     await res.clearCookie("stayNest", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      path: "/",
     });
     res.status(200).json({ message: "Sign out successful" });
   } catch (error) {

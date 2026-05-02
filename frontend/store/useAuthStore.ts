@@ -61,7 +61,7 @@ export const useAuth = create<AuthState>((set) => ({
   } catch (error) {
     const message =
         error instanceof Error ? error.message : "Something went wrong";
-      toast.error(message);
+      console.error(message);
     set({
       authUser: null,
       authOwner: null,
@@ -84,10 +84,9 @@ export const useAuth = create<AuthState>((set) => ({
         isUserSignUp: false,
       });
       return true;
-    } catch (error: unknown) {
-      const message =
-        error instanceof Error ? error.message : "Something went wrong";
-      toast.error(message);
+    } catch (error) {
+      console.log(error);
+      toast.error("Incorrect Password or Email");
       set({ isUserSignUp: false });
       return false;
     }
@@ -108,7 +107,8 @@ export const useAuth = create<AuthState>((set) => ({
     } catch (error: unknown) {
       const message =
         error instanceof Error ? error.message : "Something went wrong";
-      toast.error(message);
+        console.log(message);
+      toast.error("Incorrect Password or Email");
       set({ isUserSignIn: false });
       return false;
     }
@@ -121,6 +121,7 @@ export const useAuth = create<AuthState>((set) => ({
         authUser: null,
         authOwner: null,
       });
+      toast.success("Logout Successfull");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Something went wrong";
@@ -141,7 +142,8 @@ export const useAuth = create<AuthState>((set) => ({
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Something went wrong";
-      toast.error(message);
+      console.log(message);
+      toast.error("Incorrect Password or Email");
       set({ isOwnerSignUp: false });
       return false;
     }
@@ -160,7 +162,8 @@ export const useAuth = create<AuthState>((set) => ({
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Something went wrong";
-      toast.error(message);
+      console.log(message);
+      toast.error("Incorrect Password or Email");
       set({ isOwnerSignIn: false });
       return false;
     }
