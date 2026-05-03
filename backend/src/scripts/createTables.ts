@@ -14,7 +14,7 @@ const createTables = async () => {
 
     --pgs
     CREATE TABLE IF NOT EXISTS pgs (
-    id SERIAL PRIMARY KEY,
+      id SERIAL PRIMARY KEY,
       owner_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
       name VARCHAR(100) NOT NULL,
       description TEXT,
