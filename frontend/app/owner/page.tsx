@@ -2,7 +2,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>owner page</div>
+    <div className='h-screen'>owner page</div>
   )
 }
 
