@@ -1,5 +1,3 @@
-import React from 'react'
-
 const page = () => {
   return (
     <div className='min-h-screen'>
@@ -11,4 +9,4 @@ const page = () => {
   )
 }
 
-export default page
+export default page;
