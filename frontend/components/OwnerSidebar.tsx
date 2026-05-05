@@ -17,7 +17,7 @@ const OwnerSidebar = () => {
     }`;
   return (
     <div>
-      <div className="rounded p-3 shadow-2xl max-h-fit m-5 hidden md:block">
+      <div className="rounded-md p-3 shadow-2xl max-h-fit m-5 hidden md:block lg:ml-30 w-64">
         <h1 className="text-xl font-bold mb-4">Owner Dashboard</h1>
         <div className="flex items-center gap-2 mb-6 bg-amber-50 p-2 rounded">
           <div className=" bg-[#FFBA00] rounded-full h-10 w-10 flex items-center justify-center text-black font-bold">
