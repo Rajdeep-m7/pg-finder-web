@@ -7,7 +7,7 @@ export default function OwnerLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex">
+    <div className="flex bg-gray-50">
       <OwnerSidebar />
       
       <main className="flex-1 p-6">
