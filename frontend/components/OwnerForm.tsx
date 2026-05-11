@@ -9,6 +9,7 @@ import { FaCarSide } from "react-icons/fa";
 import { IoShirtOutline } from "react-icons/io5";
 import { FaTv } from "react-icons/fa";
 import { GoShieldCheck } from "react-icons/go";
+import { MdDone } from "react-icons/md";
 
 const amenities = [
   { id: 1, name: "Wifi", icon: <IoWifi /> },
@@ -29,6 +30,32 @@ const OwnerForm = () => {
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreview] = useState<string[]>([]);
   const previewsRef = useRef<string[]>([]);
+  const [formData, setFormData] = useState({
+    latitude: "",
+    longitude: "",
+  });
+
+  const getLocation = (event?: React.MouseEvent<HTMLButtonElement>) => {
+    event?.preventDefault();
+
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setFormData({
+          latitude: position.coords.latitude.toString(),
+          longitude: position.coords.longitude.toString(),
+        });
+      },
+      (error) => {
+        alert("Unable to retrieve location");
+        console.error(error);
+      },
+    );
+  };
 
   useEffect(() => {
     previewsRef.current = previews;
@@ -38,18 +65,16 @@ const OwnerForm = () => {
     const files = Array.from(e.target.files || []);
     setImages(files);
 
-    const newPreviews = files.map((file)=>
-      URL.createObjectURL(file)
-    )
+    const newPreviews = files.map((file) => URL.createObjectURL(file));
 
-    setPreview((prev) => [...prev , ...newPreviews]);
+    setPreview((prev) => [...prev, ...newPreviews]);
     e.target.value = "";
   };
 
-  const deletePreviews=()=>{
+  const deletePreviews = () => {
     setImages([]);
     setPreview([]);
-  }
+  };
 
   useEffect(() => {
     return () => {
@@ -65,6 +90,37 @@ const OwnerForm = () => {
 
   return (
     <div>
+      <div className="flex justify-around items-center w-full p-5 border border-gray-200 rounded-md shadow mt-5 gap-1">
+        <div
+          className={`p-1 px-3 rounded-full ${step > 1 ? "bg-green-400 p-3" : "bg-amber-300"} `}
+        >
+          {step > 1 ? <MdDone /> : 1}
+        </div>
+        <div className="w-full border h-0 border-gray-300"></div>
+        <div
+          className={`p-1 px-3 rounded-full ${step == 2 ? "bg-amber-500 shadow-md shadow-amber-200" : "bg-gray-200"} ${step > 2 ? "bg-green-400 p-3" : ""}`}
+        >
+          {step > 2 ? <MdDone /> : 2}
+        </div>
+        <div className="w-full border h-0 border-gray-300"></div>
+        <div
+          className={`p-1 px-3 rounded-full ${step == 3 ? "bg-amber-500 shadow-md shadow-amber-200" : "bg-gray-200"} ${step > 3 ? "bg-green-400 p-3" : ""}`}
+        >
+          {step > 3 ? <MdDone /> : 3}
+        </div>
+        <div className="w-full border h-0 border-gray-300"></div>
+        <div
+          className={`p-1 px-3 rounded-full ${step == 4 ? "bg-amber-500 shadow-md shadow-amber-200" : "bg-gray-200"} ${step > 4 ? "bg-green-400 p-3" : ""}`}
+        >
+          {step > 4 ? <MdDone /> : 4}
+        </div>
+        <div className="w-full border h-0 border-gray-300"></div>
+        <div
+          className={`p-1 px-3 rounded-full ${step == 5 ? "bg-amber-500 shadow-md shadow-amber-200" : "bg-gray-200"} ${step > 5 ? "bg-green-400 p-3" : ""}`}
+        >
+          {step > 5 ? <MdDone /> : 5}
+        </div>
+      </div>
       <div
         className={`bg-white rounded-lg p-5 shadow-md my-5 ${step === 1 ? "block" : "hidden"}`}
       >
@@ -88,6 +144,37 @@ const OwnerForm = () => {
             type="text"
             placeholder="Enter Property City"
           />
+          <div>
+            <h2 className="font-bold text-sm my-2">Your Location </h2>
+
+            <input
+            className="border-gray-400 border bg-gray-50 my-1 rounded-md p-2"
+              type="text"
+              placeholder="Latitude"
+              value={formData.latitude}
+              readOnly
+            />
+
+            <br />
+
+            <input
+            className="border-gray-400 border bg-gray-50 my-1 rounded-md p-2"
+              type="text"
+              placeholder="Longitude"
+              value={formData.longitude}
+              readOnly
+            />
+
+            <br />
+
+            <button
+              className="rounded bg-emerald-600 p-2 mt-3"
+              type="button"
+              onClick={getLocation}
+            >
+              Get Current Location
+            </button>
+          </div>
         </form>
       </div>
       <div
@@ -188,15 +275,28 @@ const OwnerForm = () => {
               />
             ))}
           </div>
-          {previews.length > 0 && <button className="my-2 border border-red-700 bg-red-500 text-white font-semibold p-1 rounded" onClick={deletePreviews}>Delete Images</button>}
+          {previews.length > 0 && (
+            <button
+              className="my-2 border border-red-700 bg-red-500 text-white font-semibold p-1 rounded"
+              onClick={deletePreviews}
+            >
+              Delete Images
+            </button>
+          )}
           <div className="flex flex-col md:flex-row justify-between w-full gap-5 mt-2">
             <div className="w-full">
               <h1 className="text-sm font-bold">Monthly Rent (₹)</h1>
-              <input type="number" className="border border-gray-400 w-full bg-gray-50 rounded-xl py-2 p-2 my-2" />
+              <input
+                type="number"
+                className="border border-gray-400 w-full bg-gray-50 rounded-xl py-2 p-2 my-2"
+              />
             </div>
             <div className="w-full">
               <h1 className="text-sm font-bold">Security Deposit (₹)</h1>
-              <input type="number" className="border border-gray-400 w-full bg-gray-50 rounded-xl py-2 p-2 my-2" />
+              <input
+                type="number"
+                className="border border-gray-400 w-full bg-gray-50 rounded-xl py-2 p-2 my-2"
+              />
             </div>
           </div>
         </div>
